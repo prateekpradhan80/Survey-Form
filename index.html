@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+      }
+      #main {
+        padding: 50px 50px;
+        margin: 0px 480px;
+        background-color: rgb(0, 255, 255);
+        border-radius: 5px;
+      }
+      form {
+        max-width: 400px;
+        padding: 10px 30px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+      }
+      label {
+        display: block;
+        margin: 10px 0;
+      }
+      #popupContent {
+        background-color: rgb(78, 239, 89);
+        margin: 20px 50px;
+        padding: 10px 20px;
+      }
+      #popup {
+        padding: 20px;
+        margin: 20px 20px;
+        background-color: aqua;
+      }
+      #text {
+        text-align: center;
+      }
+      #close {
+        border: none;
+        font-size: 20px;
+        padding: 8px 14px;
+        background-color: rgb(222, 107, 19);
+        color: white;
+        cursor: pointer;
+        position: relative;
+        left: 50%;
+      }
+      #close:hover{
+        background-color: bisque;
+        color: black;
+        box-shadow: 0 10px 10px ;
+      }
+    
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <form id="surveyForm">
+        <label for="firstName"
+          >First Name:
+          <input type="text" id="firstName" required />
+        </label>
+        <label for="lastName"
+          >Last Name:
+          <input type="text" id="lastName" required />
+        </label>
+        <label for="dob"
+          >Date of Birth:
+          <input type="date" id="dob" required />
+        </label>
+        <label for="country"
+          >Country:
+          <select id="country" required>
+            <option value="">Select Country</option>
+            <option value="INDIA">INDIA</option>
+            <option value="BHARAT">BHARAT</option>
+            <option value="USA">USA</option>
+          </select>
+        </label>
+        <label
+          >Gender:
+          <label for="male"
+            >Male<input type="checkbox" id="male" name="gender" value="Male"
+          /></label>
+          <label for="female"
+            >Female<input
+              type="checkbox"
+              id="female"
+              name="gender"
+              value="Female"
+          /></label>
+        </label>
+        <label for="profession"
+          >Profession:
+          <input type="text" id="profession" required />
+        </label>
+        <label for="email"
+          >Email:
+          <input type="email" id="email" required />
+        </label>
+        <label for="mobile"
+          >Mobile Number:
+          <input type="tel" id="mobile" required />
+        </label>
+        <button type="button" onclick="submitForm()">Submit</button>
+        <button type="button" onclick="resetForm()">Reset</button>
+      </form>
+    </div>
+
+    <div id="popup" style="display: none">
+      <h2 id="text">Survey Form Submission</h2>
+      <div id="popupContent"></div>
+      <button id="close" onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+      function submitForm() {
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const dob = document.getElementById("dob").value;
+        const country = document.getElementById("country").value;
+        const gender = document.querySelectorAll(
+          'input[name="gender"]:checked'
+        );
+        const profession = document.getElementById("profession").value;
+        const email = document.getElementById("email").value;
+        const mobile = document.getElementById("mobile").value;
+
+        if (gender.length === 0) {
+          alert("Please select a gender.");
+          return;
+        }
+
+        const genderValues = [...gender].map((checkbox) => checkbox.value);
+
+        const popupContent = `
+                <p><strong>First Name:</strong> ${firstName}</p>
+                <p><strong>Last Name:</strong> ${lastName}</p>
+                <p><strong>Date of Birth:</strong> ${dob}</p>
+                <p><strong>Country:</strong> ${country}</p>
+                <p><strong>Gender:</strong> ${genderValues.join(", ")}</p>
+                <p><strong>Profession:</strong> ${profession}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Mobile Number:</strong> ${mobile}</p>
+            `;
+
+        document.getElementById("popupContent").innerHTML = popupContent;
+        document.getElementById("popup").style.display = "block";
+
+        document.getElementById("surveyForm").reset();
+      }
+
+      function closePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+
+      function resetForm() {
+        document.getElementById("surveyForm").reset();
+      }
+    </script>
+  </body>
+</html>
